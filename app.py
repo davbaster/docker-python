@@ -9,19 +9,22 @@ app = Flask(__name__)
 
 def get_conexion():
 	info = ''
-	user = os.getenv('POSTGRES_USER','gmfqxtjr')
-	password = os.getenv('POSTGRES_PASSWORD','uhAmgqUuk4hVAgMAeRvHovJIa94DeG1x')
-	host = os.getenv('DB_HOST','tuffi.db.elephantsql.com')
-	port = os.getenv('DB_PORT','5432')
-	database = os.getenv('POSTGRES_DB','gmfqxtjr')
+	user = os.getenv('POSTGRES_USER','a')
+	password = os.getenv('POSTGRES_PASSWORD','a')
+	#host = os.getenv('DB_HOST','localhost')
+	port = os.getenv('DB_PORT','a')
+	database = os.getenv('POSTGRES_DB','a')
 	try:
+		# connection = psycopg2.connect(
+		# 	user=user, password=password, 
+		# 	host=host, port=port, database=database)
+		#SAME CONTAINER no use host 
 		connection = psycopg2.connect(
-			user=user, password=password, 
-			host=host, port=port, database=database)
+			user=user, password=password, port=port, database=database)
 		info = str(connection.get_dsn_parameters())
 		connection.close()
 	except:
-		info = 'ERROR' + user + password + host + port + database
+		info = 'ERROR' + user + password + port + database
 	return info
 
 
