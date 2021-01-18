@@ -12,7 +12,7 @@ services:
 before_install:
   #building docker image for testing
   #- docker build -t cajina/docker-react -f Dockerfile.dev .
-  - docker build -t cajina/docker-react .
+  - docker build -t cajina/pythonapp .
 
 #series of commands when tests needs to be executed
 script:
