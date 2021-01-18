@@ -1,0 +1,38 @@
+#used for travis-ci
+language: generic
+
+#super user permissions
+sudo: required
+
+services:
+  #asking travis-ci setup a copy of docker
+  - docker
+
+#steps to be executed before we start run test
+before_install:
+  #building docker image for testing
+  #- docker build -t cajina/docker-react -f Dockerfile.dev .
+  - docker build -t cajina/docker-react .
+
+#series of commands when tests needs to be executed
+script:
+  # -e CI=true tell travis to exit after execution
+  - docker run -e CI=true cajina/pythonapp
+
+#information for travis-ci to deploy app in aws
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-256674724116"
+  #usually is the same as the appName
+  bucket_path: "docker-react"
+  #only attemp to deploy when master branch is updated
+  on:
+    branch: master
+  #AWS security access info
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
+    

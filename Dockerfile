@@ -3,15 +3,8 @@ FROM postgres
 #update repositories
 RUN apt-get update -y
 
-#apt utilities
-RUN apt-get install -y apt-utils
-#RUN apt-get install -y sudo
-
-#install python3
-RUN apt-get install -y python3
-RUN apt-get install -y python3-pip
-
 #dependencies
+RUN apt-get install -y python3-pip
 RUN apt-get install libpq-dev -y
 
 #directories
@@ -30,6 +23,7 @@ ENV DB_HOST=localhost
 ENV DB_PORT=5432
 ENV POSTGRES_DB=postgres
 
+#copying script to postgres script entry point folder
 COPY pythonapp_script.sh /docker-entrypoint-initdb.d
 
 #RUN ["chmod", "+x", "/docker-entrypoint-initdb.d/pythonapp_script.sh"]
