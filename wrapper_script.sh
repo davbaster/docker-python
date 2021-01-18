@@ -26,7 +26,7 @@ fi
 #./my_second_process -D
 # CMD ["python3", "app.py"]
 
-./pythonapp_script.sh -D &
+./pythonapp_script.sh -D
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start python_process: $status"

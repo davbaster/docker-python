@@ -1,6 +1,8 @@
 #build phase
-FROM postgres
-CMD ["postgres"]
+#FROM postgres
+#CMD ["postgres"]
+#USER postgres
+#RUN /usr/local/bin/docker-entrypoint.sh
 
 #/var/lib/postgresql/data/ <--- has all the output files needed for RUN PHASE
 
@@ -41,25 +43,26 @@ ENV DB_PORT=5432
 ENV POSTGRES_DB=postgres
 
 #copying script
-COPY postgres_script.sh .
-COPY pythonapp_script.sh .
-COPY wrapper_script.sh .
+#COPY postgres_script.sh .
+COPY pythonapp_script.sh /docker-entrypoint-initdb.d
+#COPY wrapper_script.sh .
 
-RUN ["chmod", "+x", "./wrapper_script.sh"]
-RUN ["chmod", "+x", "./postgres_script.sh"]
-RUN ["chmod", "+x", "./pythonapp_script.sh"]
+#RUN ["chmod", "+x", "./wrapper_script.sh"]
+#RUN ["chmod", "+x", "./postgres_script.sh"]
+#RUN ["chmod", "+x", "/docker-entrypoint-initdb.d/pythonapp_script.sh"]
 
 #command to be executed when container starts
-USER postgres
+#USER postgres
 #CMD ["postgres"]
 
 #copying files needed to run postgres
 	#copy      from:                     to:
-COPY --from=0 /var/lib/postgresql/data/ /var/lib/postgresql/data/
+#COPY --from=0 /var/lib/postgresql/data/ /var/lib/postgresql/data/
 
-CMD ./wrapper_script.sh
+#CMD ./wrapper_script.sh
 
 #USER root
 #CMD python3 app.py
+CMD ["postgres"]
 
 EXPOSE 5000
